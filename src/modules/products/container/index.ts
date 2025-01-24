@@ -1,8 +1,6 @@
 import { container } from "tsyringe";
-import { IProductsRepository } from "../repositories/IProductsRepository";
 import { ProductsRepository } from "../repositories/ProductsRepository";
+import { ProductsController } from "../controllers/ProductsController";
 
-container.registerSingleton<IProductsRepository>(
-  "UsersRepository",
-  ProductsRepository,
-);
+container.registerSingleton("ProductsRepository", ProductsRepository);
+container.registerSingleton("ProductsController", ProductsController);

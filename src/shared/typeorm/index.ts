@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 import { CreateProductsTable1737726624976 } from "./migrations/1737726624976-CreateProductsTable";
+import Product from "@modules/products/entities/Product";
 
 export const dataSource = new DataSource({
   type: "postgres",
@@ -8,6 +9,6 @@ export const dataSource = new DataSource({
   username: "postgres",
   password: "docker",
   database: "vendasapi",
-  entities: [],
+  entities: [Product],
   migrations: [CreateProductsTable1737726624976],
 });
