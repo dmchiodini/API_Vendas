@@ -1,8 +1,11 @@
+import "dotenv/config";
 import "reflect-metadata";
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import routes from "./routes";
 import { AppError } from "@shared/errors/AppError";
+import "@shared/typeorm";
+import { dataSource } from "@shared/typeorm";
 
 const app = express();
 
@@ -29,6 +32,13 @@ app.use(
   },
 );
 
-app.listen(3333, () => {
-  console.log("Server started on port 3333!");
-});
+dataSource
+  .initialize()
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(`Server started on port ${process.env.PORT}!`);
+    });
+  })
+  .catch((err) => {
+    console.error("Error during Data Source initialization", err);
+  });
