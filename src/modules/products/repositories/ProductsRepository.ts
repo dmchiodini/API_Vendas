@@ -25,17 +25,13 @@ export class ProductsRepository implements IProductsRepository {
   }
 
   public async getById(id: string): Promise<Product | null> {
-    const product = await this.repository.query(
-      `SELECT * FROM products WHERE name = ${id}`,
-    );
+    const product = await this.repository.findOneBy({ id });
 
     return product;
   }
 
   public async getByName(name: string): Promise<Product | null> {
-    const product = await this.repository.query(
-      `SELECT * FROM products WHERE name = ${name}`,
-    );
+    const product = await this.repository.findOneBy({ name });
 
     return product;
   }
