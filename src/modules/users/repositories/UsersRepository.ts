@@ -25,26 +25,18 @@ export class UsersRepository implements IUsersRepository {
   }
 
   public async getById(id: string): Promise<User | null> {
-    const user = await this.repository.query(
-      `SELECT * FROM products WHERE name = ${id}`,
-    );
+    const user = await this.repository.findOneBy({ id });
 
     return user;
   }
 
   public async getByName(name: string): Promise<User | null> {
-    const user = await this.repository.query(
-      `SELECT * FROM products WHERE name = ${name}`,
-    );
-
+    const user = await this.repository.findOneBy({ name });
     return user;
   }
 
   public async getByEmail(email: string): Promise<User | null> {
-    const user = await this.repository.query(
-      `SELECT * FROM products WHERE name = ${email}`,
-    );
-
+    const user = await this.repository.findOneBy({ email });
     return user;
   }
 
