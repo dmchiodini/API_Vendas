@@ -2,7 +2,7 @@ import { Router } from "express";
 import { container } from "tsyringe";
 import { celebrate, Joi, Segments } from "celebrate";
 import { UsersController } from "../controllers/UsersController";
-import { SessionsController } from "../controllers/SessionController";
+import { SessionsController } from "../controllers/SessionsController";
 import isAuthenticated from "../../../shared/http/middlewares/isAuthenticated";
 
 const usersRouter = Router();

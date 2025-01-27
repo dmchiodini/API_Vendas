@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { container } from "tsyringe";
 import { celebrate, Joi, Segments } from "celebrate";
-import { SessionsController } from "../controllers/SessionController";
+import { SessionsController } from "../controllers/SessionsController";
 
 const sessionsRouter = Router();
 const sessionController = container.resolve(SessionsController);
 
 sessionsRouter.post(
-  "/session",
+  "/",
   celebrate({
     [Segments.BODY]: {
       email: Joi.string().email().required(),
@@ -15,7 +15,7 @@ sessionsRouter.post(
     },
   }),
   (request, response) => {
-    return sessionController.createSession(request, response);
+    return sessionController.create(request, response);
   },
 );
 
