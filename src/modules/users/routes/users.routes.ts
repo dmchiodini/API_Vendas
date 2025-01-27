@@ -3,6 +3,7 @@ import { container } from "tsyringe";
 import { celebrate, Joi, Segments } from "celebrate";
 import { UsersController } from "../controllers/UsersController";
 import { SessionsController } from "../controllers/SessionController";
+import isAuthenticated from "../../../shared/http/middlewares/isAuthenticated";
 
 const usersRouter = Router();
 const usersController = container.resolve(UsersController);
@@ -22,21 +23,8 @@ usersRouter.post(
   },
 );
 
-usersRouter.get("/", (request, response) => {
+usersRouter.get("/", isAuthenticated, (request, response) => {
   return usersController.get(request, response);
 });
-
-usersRouter.post(
-  "/session",
-  celebrate({
-    [Segments.BODY]: {
-      email: Joi.string().email().required(),
-      password: Joi.string().required(),
-    },
-  }),
-  (request, response) => {
-    return sessionController.createSession(request, response);
-  },
-);
 
 export { usersRouter };
