@@ -5,3 +5,4 @@ import { SessionsController } from "../controllers/SessionController";
 
 container.registerSingleton("UsersRepository", UsersRepository);
 container.registerSingleton("UsersController", UsersController);
+container.registerSingleton("SessionsController", SessionsController);
