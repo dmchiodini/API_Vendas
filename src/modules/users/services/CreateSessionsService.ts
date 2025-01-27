@@ -3,6 +3,9 @@ import { AppError } from "@shared/errors/AppError";
 import { IUsersRepository } from "../repositories/IUsersRepository";
 import User from "../entities/User";
 import { compare } from "bcryptjs";
+import { Secret, sign, SignOptions } from "jsonwebtoken";
+import authConfig from "@config/auth";
+import type { StringValue } from "ms";
 
 interface IRequest {
   email: string;
@@ -15,13 +18,13 @@ interface IResponse {
 }
 
 @injectable()
-export class CreateSessionService {
+export class CreateSessionsService {
   constructor(
     @inject("UsersRepository")
     private userRepository: IUsersRepository,
   ) {}
 
-  public async execute({ email, password }: IRequest): Promise<User> {
+  public async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.userRepository.getByEmail(email);
 
     if (!user) {
@@ -34,6 +37,11 @@ export class CreateSessionService {
       throw new AppError("Incorrect email/password combination.", 401);
     }
 
-    return user;
+    const token = sign({}, authConfig.jwt.secret as Secret, {
+      subject: user.id,
+      expiresIn: authConfig.jwt.expiresIn as StringValue,
+    });
+
+    return { user, token };
   }
 }
