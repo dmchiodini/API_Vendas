@@ -1,13 +1,10 @@
 import { inject, injectable } from "tsyringe";
 import Product from "../entities/Product";
-import { IProductsRepository } from "../repositories/IProductsRepository";
+import {
+  CreateProductDTO,
+  IProductsRepository,
+} from "../repositories/IProductsRepository";
 import { AppError } from "@shared/errors/AppError";
-
-type CreateProductDTO = {
-  name: string;
-  price: number;
-  quantity: number;
-};
 
 @injectable()
 export class CreateProductService {
