@@ -1,6 +1,11 @@
-import multer from "multer";
+import multer, { StorageEngine } from "multer";
 import path from "path";
 import crypto from "crypto";
+
+type UploadConfig = {
+  directory: string;
+  storage: StorageEngine;
+};
 
 const uploadFolder = path.resolve(__dirname, "..", "..", "uploads");
 
@@ -16,4 +21,4 @@ export default {
       callback(null, filename);
     },
   }),
-};
+} as UploadConfig;

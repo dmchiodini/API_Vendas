@@ -8,7 +8,7 @@ import fs from "node:fs";
 
 type UpdateUserAvatarServiceDTO = {
   user_id: string;
-  avatarFilename: string;
+  avatarFilename: string | undefined;
 };
 
 @injectable()
@@ -36,7 +36,7 @@ export class UpdateUserAvatarService {
       }
     }
 
-    user.avatar = avatarFilename;
+    user.avatar = avatarFilename as string;
 
     await this.userRepository.update(user);
 
