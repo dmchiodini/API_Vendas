@@ -39,7 +39,7 @@ export class ProductsController {
       quantity,
     });
 
-    return response.json(product);
+    return response.status(201).json(product);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
