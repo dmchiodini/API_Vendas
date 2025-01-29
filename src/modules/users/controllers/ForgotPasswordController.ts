@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { CreateUserService } from "../services/CreateUserService";
-import { ListUsersService } from "../services/ListUsersService";
 import { SendForgotPasswordEmailService } from "../services/SendForgotPasswordEmailService";
 
 export class ForgotPasswordController {
