@@ -40,5 +40,7 @@ export class ResetPasswordService {
     }
 
     user.password = await hash(password, 10);
+
+    await this.userRepository.update(user);
   }
 }

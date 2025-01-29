@@ -10,7 +10,7 @@ export class UserTokensRepository implements IUserTokensRepository {
     this.repository = dataSource.getRepository(UserToken);
   }
 
-  public async create(user_id: string): Promise<UserToken | null> {
+  public async create(user_id: string): Promise<UserToken> {
     const userToken = await this.repository.create({ user_id });
 
     return this.repository.save(userToken);

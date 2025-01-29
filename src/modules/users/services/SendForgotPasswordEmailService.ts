@@ -2,6 +2,8 @@ import { inject, injectable } from "tsyringe";
 import { AppError } from "@shared/errors/AppError";
 import { IUserTokensRepository } from "../repositories/IUserTokensRepository";
 import { IUsersRepository } from "../repositories/IUsersRepository";
+import { EtherealMail } from "@config/mail/EtherealMail";
+import { template } from "handlebars";
 
 interface IRequest {
   email: string;
@@ -23,8 +25,21 @@ export class SendForgotPasswordEmailService {
       throw new AppError("User does not exists.");
     }
 
-    const generateToken = await this.userTokensRepository.create(user.id);
+    const { token } = await this.userTokensRepository.create(user.id);
 
-    console.log("generateToken", generateToken);
+    await EtherealMail.sendMail({
+      to: {
+        name: user.name,
+        email: user.email,
+      },
+      subject: "[API Vendas] Recuperação de Senha",
+      templateData: {
+        template: `Olá, {{name}}: {{token}}`,
+        variables: {
+          name: user.name,
+          token,
+        },
+      },
+    });
   }
 }
