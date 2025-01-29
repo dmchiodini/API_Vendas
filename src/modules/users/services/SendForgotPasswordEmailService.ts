@@ -3,7 +3,7 @@ import { AppError } from "@shared/errors/AppError";
 import { IUserTokensRepository } from "../repositories/IUserTokensRepository";
 import { IUsersRepository } from "../repositories/IUsersRepository";
 import { EtherealMail } from "@config/mail/EtherealMail";
-import { template } from "handlebars";
+import path from "node:path";
 
 interface IRequest {
   email: string;
@@ -27,6 +27,13 @@ export class SendForgotPasswordEmailService {
 
     const { token } = await this.userTokensRepository.create(user.id);
 
+    const forgotPasswordTemplate = path.resolve(
+      __dirname,
+      "..",
+      "views",
+      "forgot_password.hbs",
+    );
+
     await EtherealMail.sendMail({
       to: {
         name: user.name,
@@ -34,10 +41,10 @@ export class SendForgotPasswordEmailService {
       },
       subject: "[API Vendas] Recuperação de Senha",
       templateData: {
-        template: `Olá, {{name}}: {{token}}`,
+        file: forgotPasswordTemplate,
         variables: {
           name: user.name,
-          token,
+          link: `http://localhost:3000/reset_password?token=${token}`,
         },
       },
     });
