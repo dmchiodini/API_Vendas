@@ -5,6 +5,7 @@ import { SessionsController } from "../controllers/SessionsController";
 import { UserAvatarController } from "../controllers/UserAvatarController";
 import { UserTokensRepository } from "../repositories/UserTokensRepository";
 import { ForgotPasswordController } from "../controllers/ForgotPasswordController";
+import { ProfileController } from "../controllers/ProfileController";
 
 container.registerSingleton("UsersRepository", UsersRepository);
 container.registerSingleton("UsersController", UsersController);
@@ -15,3 +16,4 @@ container.registerSingleton(
   "ForgotPasswordController",
   ForgotPasswordController,
 );
+container.registerSingleton("ProfileController", ProfileController);
